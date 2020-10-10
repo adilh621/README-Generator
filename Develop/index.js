@@ -59,14 +59,37 @@ const questions = [
 
 ];
 
-// function to write README file
-function writeToFile(fileName, data) {
-}
+inquirer
 
-// function to initialize program
+//prompt the questions to user
+    .prompt(questions)
+//make call to github API to retrieve account details
+
+    .then(function(data){
+        const queryUrl = `https://api.github.com/users/${data.username}`;
+
+        axios.get(queryUrl).then(function(res) {
+            
+            const github = {
+                githubImage: res.data.avatar_url,
+                email: res.data.email,
+                profile: res.data.html_url,
+                name: res.data.name
+            };
+            
+          fs.writeFile("README.md", generate(data, github), function(err) {
+            if (err) {
+              throw err;
+            };
+    
+            console.log("New README file created with success!");
+          });
+        });
+
+});
+
 function init() {
 
 }
 
-// function call to initialize program
 init();
