@@ -11,11 +11,7 @@ const questions = [
         name: "title",
         message: "What is your project title?"
     },
-    {
-        type: "input",
-        name: "badge",
-        message: "Please provide the badges links that you want"
-    },
+   
     {
         type: "input",
         name: "description",
@@ -62,10 +58,8 @@ const questions = [
 inquirer
 
 //prompt the questions to user
-    .prompt(questions)
-//make call to github API to retrieve account details
-
-    .then(function(data){
+    .prompt(questions)          
+    .then(function(data){       //make api call to github to retrieve users info
         const queryUrl = `https://api.github.com/users/${data.username}`;
 
         axios.get(queryUrl).then(function(res) {
